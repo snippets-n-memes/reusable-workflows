@@ -96,7 +96,7 @@ jobs:
             printf "Debug Info\n------\n"
             cat debug.txt
             printf "\nNo CODEOWNERS coverage\n------\n"
-            cat error1.log
+            # cat error1.log
           elif [ $(cat error2.log | wc -l ) -gt 0 ]; then
             exit_code=1
             printf "Debug Info\n------\n"
@@ -112,7 +112,8 @@ jobs:
           rm patterns.txt
           rm member.txt
           rm nonmember.txt
-          rm error*.log
+          rm error1.log
+          rm error2.log
           rm CODEOWNERS
 
           exit $exit_code
