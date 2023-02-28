@@ -22,9 +22,13 @@ jobs:
       - name: CODEOWNERS Check
         run: |
           exit_code=0
+          touch error1.log
+          touch error2.log
+
           files=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF})
           sed 's/\s*#.*$//' admin/meta/CODEOWNERS | sed '/^$/d' > CODEOWNERS
           patterns=$(cat CODEOWNERS | awk '{print $1'})
+
           while read -r literal; do
             pattern=$(echo "$literal" | sed 's/\./\\./')
             if [ "${pattern:0:2}" = '**' ]; then
@@ -89,14 +93,12 @@ jobs:
 
           cat nonmember.txt | sort | uniq >> error2.log
 
-          ls -l
-
           if [ $(cat error1.log | wc -l) -gt 0 ]; then
             exit_code=1
             printf "Debug Info\n------\n"
             cat debug.txt
             printf "\nNo CODEOWNERS coverage\n------\n"
-            # cat error1.log
+            cat error1.log
           elif [ $(cat error2.log | wc -l ) -gt 0 ]; then
             exit_code=1
             printf "Debug Info\n------\n"
