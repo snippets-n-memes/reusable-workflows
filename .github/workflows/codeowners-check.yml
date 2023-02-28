@@ -55,7 +55,7 @@ jobs:
                 | awk '{print "("$1")"}' \
                 | tr "\n" "|" \
                 | sed 's/|$//'\
-              ) \
+              ) ||:\
           >> error1.log
 
           teams=$(cat debug.txt \
@@ -77,7 +77,7 @@ jobs:
           done <<< "$teams"
 
           while read -r member; do
-              grep -v "$member" debug.txt >> nonmember.txt
+              grep -v "$member" debug.txt ||: >> nonmember.txt
           done < member.txt
 
           cat nonmember.txt | sort | uniq >> error2.log
