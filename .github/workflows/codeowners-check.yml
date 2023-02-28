@@ -22,7 +22,6 @@ jobs:
       - name: CODEOWNERS Check
         run: |
           exit_code=0
-          ls -l
           files=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF})
           sed 's/\s*#.*$//' admin/meta/CODEOWNERS | sed '/^$/d' > CODEOWNERS
           patterns=$(cat CODEOWNERS | awk '{print $1'})
@@ -89,6 +88,10 @@ jobs:
           done < member.txt
 
           cat nonmember.txt | sort | uniq >> error2.log
+
+          ls -l
+          cat error2.log
+          cat error1.log
 
           if [ $(cat error1.log | wc -l) -gt 0 ] || [ $(cat error2.log | wc -l ) -gt 0 ]; then
             exit_code=1
