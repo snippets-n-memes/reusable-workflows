@@ -89,16 +89,16 @@ jobs:
 
           cat nonmember.txt | sort | uniq >> error2.log
 
-          ls -l
-          cat error2.log
-          cat error1.log
-
-          if [ $(cat error1.log | wc -l) -gt 0 ] || [ $(cat error2.log | wc -l ) -gt 0 ]; then
+          if [ $(cat error1.log | wc -l) -gt 0 ]; then
             exit_code=1
             printf "Debug Info\n------\n"
             cat debug.txt
             printf "\nNo CODEOWNERS coverage\n------\n"
             cat error1.log
+          elif [ $(cat error2.log | wc -l ) -gt 0 ]; then
+            exit_code=1
+            printf "Debug Info\n------\n"
+            cat debug.txt
             printf "\nUser does not belong to team that owns these files\n------\n"
             cat error2.log
           else
