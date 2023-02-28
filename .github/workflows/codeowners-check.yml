@@ -89,6 +89,8 @@ jobs:
 
           cat nonmember.txt | sort | uniq >> error2.log
 
+          ls -l
+
           if [ $(cat error1.log | wc -l) -gt 0 ]; then
             exit_code=1
             printf "Debug Info\n------\n"
