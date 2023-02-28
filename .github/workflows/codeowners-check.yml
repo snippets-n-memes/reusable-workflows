@@ -108,12 +108,4 @@ jobs:
             cat debug.txt
           fi
 
-          rm debug.txt
-          rm patterns.txt
-          rm member.txt
-          rm nonmember.txt
-          rm error1.log
-          rm error2.log
-          rm CODEOWNERS
-
           exit $exit_code
